@@ -1,17 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef, useState } from "react";
+import { useRef, useState, lazy, Suspense } from "react";
 import {
   ArrowUpRight,
   Download,
-  Mail,
   Github,
   Linkedin,
   Send,
 } from "lucide-react";
 import { Nav } from "@/components/Nav";
 import { Reveal } from "@/components/Reveal";
+import { Loader } from "@/components/Loader";
 import { toast } from "sonner";
+
+const IceScene = lazy(() => import("@/components/IceScene").then((m) => ({ default: m.IceScene })));
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
