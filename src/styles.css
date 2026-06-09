@@ -38,11 +38,12 @@
 
 :root {
   --radius: 0.5rem;
-  /* Minimal near-black */
-  --background: oklch(0.10 0.005 270);
-  --foreground: oklch(0.98 0.003 250);
-  --card: oklch(0.13 0.005 270);
-  --card-foreground: oklch(0.98 0.003 250);
+  /* Icy near-black */
+  --background: oklch(0.09 0.012 260);
+  --foreground: oklch(0.98 0.005 240);
+  --card: oklch(0.13 0.012 260);
+  --card-foreground: oklch(0.98 0.005 240);
+
   --popover: oklch(0.13 0.005 270);
   --popover-foreground: oklch(0.98 0.003 250);
   --primary: oklch(0.98 0.003 250);
