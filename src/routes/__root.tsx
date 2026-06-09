@@ -78,15 +78,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
+      { title: "Vaddi Ghabhi Ratma — AI Engineer & Computer Vision Developer" },
       { name: "description", content: "A modern, premium dark-themed portfolio website showcasing the work of AI Engineer Vaddi Ghabhi Ratma." },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
+      { name: "author", content: "Vaddi Ghabhi Ratma" },
+      { property: "og:title", content: "Vaddi Ghabhi Ratma — AI Engineer & Computer Vision Developer" },
       { property: "og:description", content: "A modern, premium dark-themed portfolio website showcasing the work of AI Engineer Vaddi Ghabhi Ratma." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Lovable App" },
+      { property: "og:site_name", content: "Ghabhi" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@GhabhiRatma" },
+      { name: "twitter:title", content: "Vaddi Ghabhi Ratma — AI Engineer & Computer Vision Developer" },
       { name: "twitter:description", content: "A modern, premium dark-themed portfolio website showcasing the work of AI Engineer Vaddi Ghabhi Ratma." },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/7d8e7e7b-1909-41e9-ba0f-5699a4782edc/id-preview-05e06218--28114ddf-9bb8-4aac-a4ba-6df2e35a55e9.lovable.app-1780974754773.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/7d8e7e7b-1909-41e9-ba0f-5699a4782edc/id-preview-05e06218--28114ddf-9bb8-4aac-a4ba-6df2e35a55e9.lovable.app-1780974754773.png" },
@@ -103,6 +104,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
+
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
