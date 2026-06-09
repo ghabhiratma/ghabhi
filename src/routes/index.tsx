@@ -36,10 +36,10 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Vaddi Ghabhi Ratma — AI Engineer" },
       { property: "og:description", content: "Building intelligent systems that see, reason, and act autonomously." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://ghabhi.in" },
     ],
     links: [
-      { rel: "canonical", href: "/" },
+      { rel: "canonical", href: "https://ghabhi.in" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
