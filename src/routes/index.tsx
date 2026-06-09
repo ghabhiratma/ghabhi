@@ -1,17 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef, useState } from "react";
+import { useRef, useState, lazy, Suspense } from "react";
 import {
   ArrowUpRight,
   Download,
-  Mail,
   Github,
   Linkedin,
   Send,
 } from "lucide-react";
 import { Nav } from "@/components/Nav";
 import { Reveal } from "@/components/Reveal";
+import { Loader } from "@/components/Loader";
 import { toast } from "sonner";
+
+const IceScene = lazy(() => import("@/components/IceScene").then((m) => ({ default: m.IceScene })));
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -100,6 +103,7 @@ const achievements = [
 function Portfolio() {
   return (
     <div id="top" className="relative min-h-screen overflow-x-hidden">
+      <Loader />
       <Nav />
       <Hero />
       <About />
@@ -117,61 +121,77 @@ function Portfolio() {
 function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
 
   return (
-    <section ref={ref} className="relative min-h-[100svh] flex flex-col justify-between pt-32 pb-12">
-      <motion.div style={{ y, opacity }} className="container mx-auto px-6 md:px-10 flex-1 flex flex-col justify-center">
-        <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-10">
-          <span className="size-1.5 rounded-full bg-foreground animate-pulse" />
-          Available 2026
-        </div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.2, 0.7, 0.2, 1] }}
-          className="font-display font-medium tracking-[-0.04em] leading-[0.88] text-[clamp(3.5rem,12vw,11rem)]"
-        >
-          Vaddi
-          <br />
-          <span className="text-muted-foreground/60">Ghabhi</span> Ratma
-        </motion.h1>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.4 }}
-          className="mt-12 md:mt-20 grid md:grid-cols-12 gap-8 items-end"
-        >
-          <p className="md:col-span-5 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
-            AI Engineer
-            <br />
-            Computer Vision
-            <br />
-            Agentic Systems
-          </p>
-          <p className="md:col-span-6 md:col-start-7 text-xl md:text-2xl leading-snug text-foreground/80 max-w-xl">
-            Building intelligent systems that see, reason, and act — at the intersection of perception and autonomy.
-          </p>
-        </motion.div>
+    <section ref={ref} className="relative h-[100svh] w-full overflow-hidden">
+      {/* 3D scene */}
+      <motion.div style={{ scale }} className="absolute inset-0">
+        <Suspense fallback={<div className="absolute inset-0 bg-background" />}>
+          <IceScene />
+        </Suspense>
       </motion.div>
 
-      <div className="container mx-auto px-6 md:px-10 flex items-end justify-between text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
-        <span>Scroll</span>
-        <motion.span
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="text-foreground"
-        >
-          ↓
-        </motion.span>
-        <span>2026 — Portfolio</span>
-      </div>
+      {/* Vignette */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_30%,oklch(0.07_0.01_260)_90%)]" />
+
+      {/* Overlay UI */}
+      <motion.div style={{ opacity }} className="absolute inset-0 flex flex-col justify-between p-6 md:p-10 pointer-events-none">
+        {/* Top row */}
+        <div className="flex items-start justify-between text-[10px] md:text-xs font-mono uppercase tracking-[0.3em] text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <span className="size-1.5 rounded-full bg-foreground animate-pulse" />
+            <span>Available · 2026</span>
+          </div>
+          <div className="text-right leading-relaxed">
+            <p>N 16.5°</p>
+            <p>E 80.6°</p>
+          </div>
+        </div>
+
+        {/* Center wordmark */}
+        <div className="text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 1.8, ease: [0.2, 0.7, 0.2, 1] }}
+            className="font-display font-medium tracking-[-0.06em] leading-[0.85] text-[clamp(4rem,18vw,18rem)]"
+          >
+            GHABHI
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 2.4 }}
+            className="mt-2 md:-mt-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.5em] text-muted-foreground"
+          >
+            AI Engineer · Vision · Agents
+          </motion.p>
+        </div>
+
+        {/* Bottom row */}
+        <div className="flex items-end justify-between text-[10px] md:text-xs font-mono uppercase tracking-[0.3em] text-muted-foreground">
+          <div className="max-w-[180px] md:max-w-xs leading-relaxed">
+            Building intelligent systems that see, reason, and act.
+          </div>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="text-foreground hidden md:block"
+          >
+            ↓ Scroll
+          </motion.div>
+          <div className="text-right leading-relaxed">
+            <p>Vaddi Ghabhi Ratma</p>
+            <p>Index — 001 / 006</p>
+          </div>
+        </div>
+      </motion.div>
     </section>
   );
 }
+
 
 /* ---------------- SECTION HELPERS ---------------- */
 function SectionLabel({ index, label }: { index: string; label: string }) {
